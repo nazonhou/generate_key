@@ -1,0 +1,12 @@
+---
+# tasks file for roles/generate_key
+- name: Artisan key generate
+  community.docker.docker_container_exec:
+    container: "{{ app_container_name }}"
+    command: /bin/bash -c "php artisan key:generate"
+    chdir: /var/www/html
+  register: result
+
+- name: Print stdout
+  ansible.builtin.debug:
+    var: result.stdout
